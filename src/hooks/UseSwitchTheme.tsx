@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { createTheme } from '@mui/material';
 
 function useSwitchTheme() {
-  const [mode, setMode] = useState<'light' | 'dark'>('light');
+  const [mode, setMode] = useState<'light' | 'dark'>('dark');
 
   const colorMode = useMemo(
     () => ({

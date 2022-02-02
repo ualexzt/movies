@@ -1,6 +1,6 @@
 export const films = [
   {
-    // _id: id(),
+    _id: 1,
     title: 'Legend of the Seeker',
     director: 'Stephen Tolkin',
     duration: 93,
@@ -11,7 +11,7 @@ export const films = [
       "After the mysterious murder of his father, a son's search for answers begins a momentous fight against tyranny.",
   },
   {
-    // _id: id(),
+    _id: 2,
     title: 'Gnomebook',
     director: 'Murray Fahey',
     duration: 88,
@@ -22,7 +22,7 @@ export const films = [
       'A colourful array of characters compete at the Annual Australian Garden Gnome Convention. Once a year 2000 garden gnomes and 10,000 gnome carers gather in the sleepy mountain hamlet of Glenbrook, for the annual Gnome convention; the gnomes arrive by road, train, plane, foot and post',
   },
   {
-    // _id: id(),
+    _id: 3,
     title: 'Rise of the Legend',
     director: 'Teng Bee',
     duration: 110,
@@ -34,7 +34,7 @@ export const films = [
   },
 
   {
-    // _id: id(),
+    _id: 4,
     title: 'Siji: Driver',
     director: 'David Chai',
     duration: 88,
@@ -45,7 +45,7 @@ export const films = [
       'After a driver rescues a passenger from an abusive boyfriend, he discovers she is a human trafficking victim. But in order to free her, he must give up the thing he loves the most.',
   },
   {
-    // _id: id(),
+    _id: 5,
     title: 'Aquaman',
     director: 'James Wan',
     duration: 112,
