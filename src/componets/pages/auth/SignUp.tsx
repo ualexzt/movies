@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { SyntheticEvent, useState } from 'react';
 import {
+  Alert,
   Avatar,
   Box,
   Button,
@@ -7,15 +8,48 @@ import {
   Container,
   FormControlLabel,
   Grid,
+  Link,
   TextField,
   Typography,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useUserAuth } from '../../context/UserAuthContext';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 function SignUp() {
+  const navigate = useNavigate();
+  const { auth, setUser } = useUserAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSignUp = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredentials) => {
+        setUser({
+          id: userCredentials.user.uid,
+          email: userCredentials.user.email,
+        });
+        navigate('/');
+      })
+      .catch((e) => {
+        setError(e.message);
+      });
+  };
   return (
     <>
+      {error && (
+        <Alert
+          onClose={() => {
+            setError('');
+          }}
+          severity="error"
+        >
+          {error}
+        </Alert>
+      )}
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
@@ -33,27 +67,6 @@ function SignUp() {
           </Typography>
           <Box component="form" noValidate sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
@@ -62,6 +75,7 @@ function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -73,6 +87,7 @@ function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -82,12 +97,20 @@ function SignUp() {
                 />
               </Grid>
             </Grid>
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={handleSignUp}
+            >
               Sign Up
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link to="/signin">Already have an account? Sign in</Link>
+                <Link component={RouterLink} to="/login" sx={{ textDecoration: 'none' }}>
+                  Already have an account? Sign in
+                </Link>
               </Grid>
             </Grid>
           </Box>

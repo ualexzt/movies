@@ -6,8 +6,9 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { Button } from '@mui/material';
-import { Login } from '@mui/icons-material';
+import { useUserAuth } from '../context/UserAuthContext';
+import LoginUser from './LoginUser';
+import LogOutUset from './LogOutUset';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -52,6 +53,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
+  const { user } = useUserAuth();
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -64,19 +67,14 @@ export default function Header() {
           >
             MOVIE HUNTER
           </Typography>
-          <Button
-            variant="outlined"
-            startIcon={<Login />}
-            sx={{ mr: 5, color: 'white', border: 1 }}
-          >
-            JOIN US
-          </Button>
+
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
           </Search>
+          {user !== null ? <LoginUser /> : <LogOutUset />}
         </Toolbar>
       </AppBar>
     </Box>

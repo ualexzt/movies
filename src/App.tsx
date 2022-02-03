@@ -7,10 +7,12 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import SocialIcons from './componets/ui/SocialIcons';
 import { Route, Routes } from 'react-router-dom';
 import MainPage from './componets/pages/MainPage';
+import LogIn from './componets/pages/auth/LogIn';
+import SignUp from './componets/pages/auth/SignUp';
+import { UserAuthContextProvider } from './componets/context/UserAuthContext';
+import Profile from './componets/pages/dashboard/Profile';
 import MoviesList from './componets/pages/movie/MoviesList';
 import MovieDetail from './componets/pages/movie/MovieDetail';
-import SignIn from './componets/pages/auth/SignIn';
-import SignUp from './componets/pages/auth/SignUp';
 
 function App() {
   const { theme, colorMode } = useSwitchTheme();
@@ -27,13 +29,16 @@ function App() {
         </Box>
         <Header />
         <Container maxWidth="lg" sx={{ p: 3 }}>
-          <Routes>
-            <Route path="/" element={<MainPage />} />
-            <Route path="signin" element={<SignIn />} />
-            <Route path="signup" element={<SignUp />} />
-            <Route path="movies" element={<MoviesList />} />
-            <Route path="movies/:id" element={<MovieDetail />} />
-          </Routes>
+          <UserAuthContextProvider>
+            <Routes>
+              <Route path="/" element={<MainPage />} />
+              <Route path="login" element={<LogIn />} />
+              <Route path="signup" element={<SignUp />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="movies" element={<MoviesList />} />
+              <Route path="movies/:id" element={<MovieDetail />} />
+            </Routes>
+          </UserAuthContextProvider>
         </Container>
       </>
     </ThemeProvider>
