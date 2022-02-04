@@ -15,7 +15,7 @@ function MainPage() {
           alignItems: 'center',
         }}
       >
-        <CardMedia component="img" height="360" image={HeaderImg} alt="green iguana" />
+        <CardMedia component="img" height="400" image={HeaderImg} alt="green iguana" />
         <Typography component="h1" variant="h4" sx={{ textAlign: 'center', color: 'red' }}>
           Unlimited movies, TV shows, and more. Watch anywhere. Cancel anytime.
         </Typography>
