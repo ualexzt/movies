@@ -2,14 +2,18 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import { Avatar, IconButton, Link, Menu, MenuItem, Tooltip } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { getAuth, signOut } from 'firebase/auth';
+import { app } from '../../firebaseConfig';
 import { useUserAuth } from '../context/UserAuthContext';
+
+const auth = getAuth(app);
 
 // import { signOut } from 'firebase/auth';
 
 function LoginUser() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { setUser } = useUserAuth();
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -19,13 +23,14 @@ function LoginUser() {
     setAnchorElUser(null);
   };
 
-  const handleLogOut = () => {
-    // await signOut(auth)
-    //   .then()
-    //   .catch((e) => console.log(e.message));
-    // setAnchorElUser(null);
-    setUser(null);
-    // navigate('/');
+  const handleLogOut = async () => {
+    await signOut(auth)
+      .then(() => {
+        setAnchorElUser(null);
+        setUser(() => null);
+        navigate('/');
+      })
+      .catch((e) => console.log(e.message));
   };
   return (
     <>

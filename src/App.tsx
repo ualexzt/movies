@@ -28,9 +28,8 @@ function App() {
             {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>
         </Box>
-        <Header />
-
         <UserAuthContextProvider>
+          <Header />
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="login" element={<LogIn />} />

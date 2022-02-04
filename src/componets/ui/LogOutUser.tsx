@@ -6,7 +6,7 @@ import { Login } from '@mui/icons-material';
 function LogOutUser() {
   return (
     <>
-      <Link to="/signin">
+      <Link to="/login">
         <Button variant="outlined" startIcon={<Login />} sx={{ ml: 5, color: 'white', border: 1 }}>
           JOIN US
         </Button>

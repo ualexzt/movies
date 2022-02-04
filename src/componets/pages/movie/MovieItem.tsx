@@ -1,12 +1,14 @@
 import React from 'react';
 import { Button, Card, CardActions, CardContent, CardMedia, Typography, Zoom } from '@mui/material';
 import { Movie } from '../../../types';
+import { useNavigate } from 'react-router-dom';
 
 interface MovieProps {
   movie: Movie;
 }
 
 function MovieItem({ movie }: MovieProps) {
+  const navigate = useNavigate();
   return (
     <>
       <Zoom in={true} style={{ transitionDelay: '500ms' }}>
@@ -22,7 +24,9 @@ function MovieItem({ movie }: MovieProps) {
           </CardContent>
           <CardActions>
             <Button size="small">Share</Button>
-            <Button size="small">Learn More</Button>
+            <Button size="small" onClick={() => navigate(`${movie.id}`)}>
+              Learn More
+            </Button>
           </CardActions>
         </Card>
       </Zoom>
