@@ -4,12 +4,13 @@ import { Avatar, IconButton, Link, Menu, MenuItem, Tooltip } from '@mui/material
 import Typography from '@mui/material/Typography';
 import { Link as RouterLink } from 'react-router-dom';
 import { useUserAuth } from '../context/UserAuthContext';
-import { signOut } from 'firebase/auth';
+
+// import { signOut } from 'firebase/auth';
 
 function LoginUser() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   // const navigate = useNavigate();
-  const { auth } = useUserAuth();
+  const { setUser } = useUserAuth();
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -18,12 +19,12 @@ function LoginUser() {
     setAnchorElUser(null);
   };
 
-  const handleLogOut = async () => {
-    await signOut(auth)
-      .then()
-      .catch((e) => console.log(e.message));
+  const handleLogOut = () => {
+    // await signOut(auth)
+    //   .then()
+    //   .catch((e) => console.log(e.message));
     // setAnchorElUser(null);
-    // setUser(null);
+    setUser(null);
     // navigate('/');
   };
   return (
@@ -53,6 +54,11 @@ function LoginUser() {
           <MenuItem onClick={handleCloseUserMenu}>
             <Link component={RouterLink} to="/profile" sx={{ textDecoration: 'none' }}>
               Profile
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={handleCloseUserMenu}>
+            <Link component={RouterLink} to="/movies/add" sx={{ textDecoration: 'none' }}>
+              Add movie
             </Link>
           </MenuItem>
           <MenuItem onClick={handleLogOut}>

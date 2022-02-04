@@ -13,18 +13,25 @@ import {
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useUserAuth } from '../../context/UserAuthContext';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 function LogIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { auth } = useUserAuth();
+  const { auth, setUser } = useUserAuth();
+  const navigate = useNavigate();
   const handleLogIn = async (e: SyntheticEvent<HTMLElement>) => {
     e.preventDefault();
 
     await signInWithEmailAndPassword(auth, email, password)
-      .then((res) => console.log(res))
+      .then((userCredentials) => {
+        setUser({
+          id: userCredentials.user.uid,
+          email: userCredentials.user.email,
+        });
+        navigate('/');
+      })
       .catch((e) => setError(e.message));
   };
   return (

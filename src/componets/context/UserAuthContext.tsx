@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Auth, getAuth, onAuthStateChanged } from 'firebase/auth';
 import { IUser, TypeSetState } from '../../types';
-import { app } from '../../firebase';
+
+import { app } from '../../firebaseConfig';
 
 interface IContext {
   user: IUser | null;
