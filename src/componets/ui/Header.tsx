@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { BaseSyntheticEvent } from 'react';
 import { alpha, styled } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -8,7 +9,9 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import { useUserAuth } from '../context/UserAuthContext';
 import LoginUser from './LoginUser';
-import LogOutUset from './LogOutUset';
+import LogOutUser from './LogOutUser';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -54,27 +57,44 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Header() {
   const { user } = useUserAuth();
+  const pages = ['Movies', 'Favorites', 'Bestseller'];
+  const navigate = useNavigate();
+  const handleNavigate = (e: BaseSyntheticEvent) => {
+    navigate(`/${e.target.id}`);
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
           <Typography
-            variant="h6"
+            onClick={() => navigate('/')}
+            variant="h5"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, ml: 5 }}
+            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, ml: 5, cursor: 'pointer' }}
           >
             MOVIE HUNTER
           </Typography>
-
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {pages.map((page) => (
+              <Button
+                id={page}
+                key={page}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+                onClick={handleNavigate}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
           </Search>
-          {user !== null ? <LoginUser /> : <LogOutUset />}
+          {user !== null ? <LoginUser /> : <LogOutUser />}
         </Toolbar>
       </AppBar>
     </Box>

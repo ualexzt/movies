@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { Login } from '@mui/icons-material';
 
-function LogOutUset() {
+function LogOutUser() {
   return (
     <>
       <Link to="/signin">
@@ -15,4 +15,4 @@ function LogOutUset() {
   );
 }
 
-export default LogOutUset;
+export default LogOutUser;

@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+
 // const firebaseConfig = {
 //   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
 //   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -8,7 +9,7 @@ import { getFirestore } from 'firebase/firestore';
 //   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
 //   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 // };
-
+// console.log(firebaseConfig);
 const firebaseConfig = {
   apiKey: 'AIzaSyAXjW1bXI01IWdMju2CK-7gpNCaxvdAArw',
   authDomain: 'movies-9d73e.firebaseapp.com',

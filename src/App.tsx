@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Container, CssBaseline, IconButton, ThemeProvider } from '@mui/material';
+import { Box, CssBaseline, IconButton, ThemeProvider } from '@mui/material';
 import Header from './componets/ui/Header';
 import useSwitchTheme from './hooks/UseSwitchTheme';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
@@ -29,20 +29,18 @@ function App() {
           </IconButton>
         </Box>
         <Header />
-        <Container maxWidth="lg" sx={{ p: 3 }}>
-          <UserAuthContextProvider>
-            <Routes>
-              <Route path="/" element={<MainPage />} />
-              <Route path="login" element={<LogIn />} />
-              <Route path="signup" element={<SignUp />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="movies" element={<MoviesList />} />
-              <Route path="movies/add" element={<AddMovie />} />
 
-              <Route path="movies/:id" element={<MovieDetail />} />
-            </Routes>
-          </UserAuthContextProvider>
-        </Container>
+        <UserAuthContextProvider>
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="login" element={<LogIn />} />
+            <Route path="signup" element={<SignUp />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="movies" element={<MoviesList />} />
+            <Route path="movies/add" element={<AddMovie />} />
+            <Route path="movies/:id" element={<MovieDetail />} />
+          </Routes>
+        </UserAuthContextProvider>
       </>
     </ThemeProvider>
   );
