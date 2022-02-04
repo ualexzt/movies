@@ -5,13 +5,13 @@ import Typography from '@mui/material/Typography';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { getAuth, signOut } from 'firebase/auth';
 import { app } from '../../firebaseConfig';
-import { useUserAuth } from '../context/UserAuthContext';
+import { useUserAuth } from '../../context/UserAuthContext';
 
 const auth = getAuth(app);
 
 // import { signOut } from 'firebase/auth';
 
-function LoginUser() {
+function LoginButton() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
   const { setUser } = useUserAuth();
@@ -75,4 +75,4 @@ function LoginUser() {
   );
 }
 
-export default LoginUser;
+export default LoginButton;

@@ -7,11 +7,11 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { useUserAuth } from '../context/UserAuthContext';
-import LoginUser from './LoginUser';
-import LogOutUser from './LogOutUser';
+import LoginButton from './LoginButton';
+import LogoutButton from './LogoutButton';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useUserAuth } from '../../context/UserAuthContext';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -94,7 +94,7 @@ export default function Header() {
             </SearchIconWrapper>
             <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
           </Search>
-          {user !== null ? <LoginUser /> : <LogOutUser />}
+          {user !== null ? <LoginButton /> : <LogoutButton />}
         </Toolbar>
       </AppBar>
     </Box>

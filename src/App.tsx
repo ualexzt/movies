@@ -4,12 +4,12 @@ import Header from './componets/ui/Header';
 import useSwitchTheme from './hooks/UseSwitchTheme';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
-import SocialIcons from './componets/ui/SocialIcons';
+import SocialButtons from './componets/ui/SocialButtons';
 import { Route, Routes } from 'react-router-dom';
 import MainPage from './componets/pages/MainPage';
 import LogIn from './componets/pages/auth/LogIn';
 import SignUp from './componets/pages/auth/SignUp';
-import { UserAuthContextProvider } from './componets/context/UserAuthContext';
+import { UserAuthContextProvider } from './context/UserAuthContext';
 import Profile from './componets/pages/dashboard/Profile';
 import MoviesList from './componets/pages/movie/MoviesList';
 import MovieDetail from './componets/pages/movie/MovieDetail';
@@ -23,7 +23,7 @@ function App() {
       <>
         <CssBaseline />
         <Box sx={{ display: 'flex', justifyContent: 'end', alignItems: 'center', mr: 5 }}>
-          <SocialIcons />
+          <SocialButtons />
           <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode}>
             {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>

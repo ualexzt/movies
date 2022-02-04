@@ -1,10 +1,13 @@
 import React from 'react';
 import { Box, Button, CardMedia, Container, Typography } from '@mui/material';
 import { Login } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import HeaderImg from '../../assets/img/BEST-MOVIES.jpg';
+import { useUserAuth } from '../../context/UserAuthContext';
 
 function MainPage() {
+  const navigate = useNavigate();
+  const { user } = useUserAuth();
   return (
     <Container component="main" maxWidth="lg">
       <Box
@@ -22,17 +25,19 @@ function MainPage() {
         <Typography component="h1" variant="h6">
           Ready to watch? Create or restart your membership.
         </Typography>
-
-        <Link to="/signup">
+        {user !== null ? (
+          <></>
+        ) : (
           <Button
-            variant="outlined"
+            variant="contained"
             startIcon={<Login />}
-            sx={{ mt: 3, color: 'white', border: 1 }}
+            sx={{ mt: 3, border: 1 }}
             size="large"
+            onClick={() => navigate('/signup')}
           >
             JOIN US
           </Button>
-        </Link>
+        )}
       </Box>
     </Container>
   );

@@ -14,8 +14,9 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { useUserAuth } from '../../context/UserAuthContext';
+
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { useUserAuth } from '../../../context/UserAuthContext';
 
 function SignUp() {
   const navigate = useNavigate();

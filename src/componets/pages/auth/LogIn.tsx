@@ -11,9 +11,10 @@ import {
   Typography,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { useUserAuth } from '../../context/UserAuthContext';
+
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useUserAuth } from '../../../context/UserAuthContext';
 
 function LogIn() {
   const [email, setEmail] = useState('');
