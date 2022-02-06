@@ -1,50 +1,44 @@
-import React, { SyntheticEvent, useState } from 'react';
-import {
-  Alert,
-  Avatar,
-  Box,
-  Button,
-  Container,
-  Grid,
-  Link,
-  TextField,
-  Typography,
-} from '@mui/material';
+import React, { useState } from 'react';
+import { Alert, Avatar, Box, Container, Grid, Link, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
 import { useUserAuth } from '../../../context/UserAuthContext';
+import AuthForm from './AuthForm';
 
 function LogIn() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const { auth, setUser } = useUserAuth();
+  const [errors, setErrors] = useState('');
   const navigate = useNavigate();
-  const handleLogIn = async (e: SyntheticEvent<HTMLElement>) => {
-    e.preventDefault();
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    onSubmit: async (values) => {
+      await signInWithEmailAndPassword(auth, values.email, values.password)
+        .then((userCredentials) => {
+          setUser({
+            id: userCredentials.user.uid,
+            email: userCredentials.user.email,
+          });
+          navigate('/');
+        })
+        .catch((e) => setErrors(e.message));
+    },
+  });
 
-    await signInWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
-        setUser({
-          id: userCredentials.user.uid,
-          email: userCredentials.user.email,
-        });
-        navigate('/');
-      })
-      .catch((e) => setError(e.message));
-  };
   return (
     <>
-      {error && (
+      {errors && (
         <Alert
           onClose={() => {
-            setError('');
+            setErrors('');
           }}
           severity="error"
         >
-          {error}
+          {errors}
         </Alert>
       )}
 
@@ -63,50 +57,24 @@ function LogIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={(e) => setEmail(e.target.value)}
+          <form onSubmit={formik.handleSubmit}>
+            <AuthForm
+              email={formik.values.email}
+              password={formik.values.password}
+              handleChange={formik.handleChange}
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={handleLogIn}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item>
-                <Link
-                  component={RouterLink}
-                  to="/signup"
-                  sx={{ textDecoration: 'none', textAlign: 'center' }}
-                >
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
+          </form>
+          <Grid container>
+            <Grid item>
+              <Link
+                component={RouterLink}
+                to="/signup"
+                sx={{ textDecoration: 'none', textAlign: 'center' }}
+              >
+                {"Don't have an account? Sign Up"}
+              </Link>
             </Grid>
-          </Box>
+          </Grid>
         </Box>
       </Container>
     </>
