@@ -1,32 +1,49 @@
-import React from 'react';
-import { ButtonBase, Grid, Paper, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { CardMedia, Grid, Paper, Typography } from '@mui/material';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../../../firebaseConfig';
+import { useParams } from 'react-router-dom';
+import { Movie } from '../../../types';
 
 function MovieDetail() {
-  // const params = useParams();
-  // const [movie, setMovie] = useState<Movie | null>(null);
+  const params = useParams();
+  const [movie, setMovie] = useState<Movie>({} as Movie);
 
-  // useEffect(() => {}, []);
+  useEffect(() => {
+    async function getMovie() {
+      const docRef = doc(db, 'movies', `${params.id}`);
+      try {
+        const docSnap = await getDoc(docRef);
+        setMovie(docSnap.data() as Movie);
+      } catch (e) {
+        console.log('No such document!');
+      }
+    }
+
+    getMovie();
+  }, [params.id]);
 
   return (
     <>
-      <Paper sx={{ my: 2, p: 2, margin: 'auto', maxWidth: 'lg', flexGrow: 1 }}>
+      <Paper sx={{ my: 2, p: 2, mx: 'auto', maxWidth: 'lg', flexGrow: 1 }}>
         <Grid container spacing={2}>
           <Grid item>
-            <ButtonBase sx={{ width: 128, height: 128 }}>
-              <img alt="complex" src="/static/images/grid/complex.jpg" />
-            </ButtonBase>
+            <CardMedia component="img" height="240" image={movie?.img} alt={movie.title} />
           </Grid>
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
                 <Typography gutterBottom variant="subtitle1" component="div">
-                  Standard license
+                  {movie?.title}
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                  Full resolution 1920x1080 • JPEG
+                  Director: {movie.director}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  ID: 1030114
+                  Description: {movie.description}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Duration: {movie.duration}
                 </Typography>
               </Grid>
               <Grid item>
@@ -37,7 +54,7 @@ function MovieDetail() {
             </Grid>
             <Grid item>
               <Typography variant="subtitle1" component="div">
-                $19.00
+                ${movie.price}
               </Typography>
             </Grid>
           </Grid>

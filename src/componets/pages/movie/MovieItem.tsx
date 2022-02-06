@@ -12,7 +12,7 @@ function MovieItem({ movie }: MovieProps) {
   return (
     <>
       <Zoom in={true} style={{ transitionDelay: '500ms' }}>
-        <Card sx={{ m: 2, maxWidth: 240 }}>
+        <Card sx={{ m: 2, width: 240 }}>
           <CardMedia component="img" height="140" image={movie.img} alt="green iguana" />
           <CardContent>
             <Typography gutterBottom variant="h6" component="div">

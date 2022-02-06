@@ -8,7 +8,7 @@ export interface IUser {
 }
 
 export interface Movie {
-  id: string;
+  id?: string;
   title: string;
   director: string;
   duration: string;
