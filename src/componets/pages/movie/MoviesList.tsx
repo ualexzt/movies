@@ -25,7 +25,7 @@ function MoviesList() {
     <Container maxWidth="lg" sx={{ display: 'flex', flexWrap: 'wrap', mt: 2 }}>
       {movies.length < 0
         ? 'Don`t create movies list'
-        : movies?.map((movie) => <MovieItem key={movie.id} movie={movie} />)}
+        : movies.map((movie) => <MovieItem key={movie.id} movie={movie} />)}
     </Container>
   );
 }

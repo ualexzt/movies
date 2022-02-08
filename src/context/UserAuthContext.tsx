@@ -4,7 +4,7 @@ import { User } from '../types';
 import { userAuthContext } from '../hooks/useUserAuth';
 import { app } from '../firebaseConfig';
 
-export function UserAuthContextProvider({ children }: any) {
+export function UserAuthContextProvider({ children }: { children: JSX.Element | JSX.Element[] }) {
   const [user, setUser] = useState<User | null>(null);
   const auth = getAuth(app);
 
