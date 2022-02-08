@@ -52,14 +52,7 @@ function App() {
                 </RequireAuth>
               }
             />
-            <Route
-              path="movies/:id"
-              element={
-                <RequireAuth>
-                  <MovieDetail />
-                </RequireAuth>
-              }
-            />
+            <Route path="movies/:id" element={<MovieDetail />} />
             <Route
               path="movies/edit/:id"
               element={

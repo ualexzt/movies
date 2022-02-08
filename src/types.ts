@@ -17,4 +17,5 @@ export interface Movie {
   featured: boolean;
   description: string;
   author?: string;
+  rate?: number;
 }

@@ -1,5 +1,14 @@
 import React from 'react';
-import { Button, Card, CardActions, CardContent, CardMedia, Typography, Zoom } from '@mui/material';
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Rating,
+  Typography,
+  Zoom,
+} from '@mui/material';
 import { Movie } from '../../../types';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,6 +30,7 @@ function MovieItem({ movie }: MovieProps) {
             <Typography variant="body2" color="text.secondary">
               Director: {movie.director}
             </Typography>
+            <Rating name="read-only" value={movie.rate} precision={0.5} readOnly />
           </CardContent>
           <CardActions>
             <Button size="small">Share</Button>

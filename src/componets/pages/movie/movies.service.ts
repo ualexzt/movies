@@ -50,6 +50,7 @@ export const addNewMovie = async (
       featured: values.featured,
       img: 'https://upload.wikimedia.org/wikipedia/ru/thumb/6/6e/Spider-Man_%E2%80%94_No_Way_Home_poster.jpg/640px-Spider-Man_%E2%80%94_No_Way_Home_poster.jpg',
       author: user?.email,
+      rate: 0,
     });
     resetForm();
     console.log('Document written with ID: ', docRef.id);
@@ -68,6 +69,7 @@ export const editMovie = async (values: Movie, paramId: string) => {
       duration: values.duration,
       price: values.price,
       featured: values.featured,
+      rate: values.rate,
     });
   } catch (e: any) {
     console.log(e.message);

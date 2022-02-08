@@ -1,21 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Button, CardMedia, Grid, Paper, Typography } from '@mui/material';
-import { DocumentData } from 'firebase/firestore';
+import React, { SyntheticEvent, useEffect, useState } from 'react';
+import { Box, Button, CardMedia, Grid, Paper, Rating, Typography } from '@mui/material';
+import { doc, DocumentData, updateDoc } from 'firebase/firestore';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Movie } from '../../../types';
 import { useUserAuth } from '../../../hooks/useUserAuth';
 import { deleteMovie, getMovie } from './movies.service';
+import { db } from '../../../firebaseConfig';
 
 function MovieDetail() {
   const params = useParams();
   const navigate = useNavigate();
   const [movie, setMovie] = useState<Movie>({} as Movie);
+  const [rate, setRate] = useState<number | null>(0);
   const { user } = useUserAuth();
 
   useEffect(() => {
     async function detail() {
       const docSnap: DocumentData | undefined = await getMovie(params.id);
       setMovie(docSnap?.data());
+      setRate(docSnap?.data().rate);
     }
 
     detail();
@@ -25,6 +28,15 @@ function MovieDetail() {
     deleteMovie(params.id);
     navigate('/movies');
   };
+
+  const handleRate = async (event: SyntheticEvent, newValue: number | null) => {
+    const updateMovie = doc(db, 'movies', `${params.id}`);
+    await updateDoc(updateMovie, {
+      rate: newValue,
+    });
+    setRate(newValue);
+  };
+
   return (
     <>
       <Paper sx={{ my: 2, p: 2, mx: 'auto', maxWidth: 'lg', flexGrow: 1 }}>
@@ -48,25 +60,30 @@ function MovieDetail() {
                   Duration: {movie.duration}
                 </Typography>
               </Grid>
-              {user?.email === movie.author && (
-                <Grid item>
-                  <Box sx={{ display: 'flex' }}>
-                    <Button
-                      variant="outlined"
-                      sx={{ mr: 1 }}
-                      onClick={() => navigate(`/movies/edit/${params.id}`)}
-                    >
-                      Edit
-                    </Button>
-                    <Button variant="outlined" onClick={handleDelete}>
-                      {' '}
-                      Remove{' '}
-                    </Button>
-                  </Box>
-                </Grid>
-              )}
+              <Grid item>
+                <Box sx={{ display: 'flex' }}>
+                  <Button variant="outlined" sx={{ mr: 1 }} onClick={() => navigate(-1)}>
+                    Go Back
+                  </Button>
+                  {user?.email === movie.author && (
+                    <>
+                      <Button
+                        variant="outlined"
+                        sx={{ mr: 1 }}
+                        onClick={() => navigate(`/movies/edit/${params.id}`)}
+                      >
+                        Edit
+                      </Button>
+                      <Button variant="outlined" onClick={handleDelete}>
+                        Remove
+                      </Button>
+                    </>
+                  )}
+                </Box>
+              </Grid>
             </Grid>
             <Grid item>
+              <Rating value={rate || 0} precision={0.5} onChange={handleRate} />
               <Typography variant="subtitle1" component="div">
                 ${movie.price}
               </Typography>
