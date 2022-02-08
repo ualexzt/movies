@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Alert, Avatar, Box, Container, Grid, Link, Typography } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useUserAuth } from '../../../hooks/useUserAuth';
 import AuthForm from './AuthForm';
+import { logIn } from './auth.service';
 
 function LogIn() {
   const { auth, setUser } = useUserAuth();
@@ -17,15 +17,14 @@ function LogIn() {
       password: '',
     },
     onSubmit: async (values) => {
-      await signInWithEmailAndPassword(auth, values.email, values.password)
-        .then((userCredentials) => {
-          setUser({
-            id: userCredentials.user.uid,
-            email: userCredentials.user.email,
-          });
-          navigate('/');
-        })
-        .catch((e) => setErrors(e.message));
+      try {
+        const userCredentials = await logIn(auth, values.email, values.password);
+        setUser({
+          id: userCredentials.user.uid,
+          email: userCredentials.user.email,
+        });
+        navigate('/');
+      } catch (e) {}
     },
   });
 
