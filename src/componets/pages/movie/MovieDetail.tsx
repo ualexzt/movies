@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, CardMedia, Grid, Paper, Typography } from '@mui/material';
-import { deleteDoc, doc, DocumentData } from 'firebase/firestore';
-import { db } from '../../../firebaseConfig';
+import { DocumentData } from 'firebase/firestore';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Movie } from '../../../types';
 import { useUserAuth } from '../../../hooks/useUserAuth';
-import { getMovie } from './movies.service';
+import { deleteMovie, getMovie } from './movies.service';
 
 function MovieDetail() {
   const params = useParams();
@@ -22,13 +21,9 @@ function MovieDetail() {
     detail();
   }, [params.id]);
 
-  const handleDelete = async () => {
-    try {
-      await deleteDoc(doc(db, 'movies', `${params.id}`));
-      navigate('/movies');
-    } catch (e: any) {
-      console.log(e.message);
-    }
+  const handleDelete = () => {
+    deleteMovie(params.id);
+    navigate('/movies');
   };
   return (
     <>

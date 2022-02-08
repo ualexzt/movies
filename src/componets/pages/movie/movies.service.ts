@@ -1,6 +1,6 @@
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { db, storage } from '../../../firebaseConfig';
-import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { Movie, User } from '../../../types';
 import { FormikState } from 'formik';
 
@@ -80,5 +80,13 @@ export const getMovie = async (id: string | undefined) => {
     return await getDoc(docRef);
   } catch (e) {
     console.log('No such document!');
+  }
+};
+
+export const deleteMovie = async (id: string | undefined) => {
+  try {
+    await deleteDoc(doc(db, 'movies', `${id}`));
+  } catch (e: any) {
+    console.log(e.message);
   }
 };
