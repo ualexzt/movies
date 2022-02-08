@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, CardMedia, Grid, Paper, Typography } from '@mui/material';
-import { deleteDoc, doc } from 'firebase/firestore';
+import { deleteDoc, doc, DocumentData } from 'firebase/firestore';
 import { db } from '../../../firebaseConfig';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Movie } from '../../../types';
 import { useUserAuth } from '../../../hooks/useUserAuth';
 import { getMovie } from './movies.service';
-import firebase from 'firebase/compat';
-import DocumentData = firebase.firestore.DocumentData;
 
 function MovieDetail() {
   const params = useParams();

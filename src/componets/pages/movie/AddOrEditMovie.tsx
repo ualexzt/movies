@@ -14,8 +14,7 @@ import { useUserAuth } from '../../../hooks/useUserAuth';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Movie } from '../../../types';
 import { addNewMovie, editMovie, getMovie } from './movies.service';
-import firebase from 'firebase/compat';
-import DocumentData = firebase.firestore.DocumentData;
+import { DocumentData } from 'firebase/firestore';
 
 function AddOrEditMovie() {
   const { user } = useUserAuth();

@@ -14,6 +14,7 @@ import Profile from './componets/pages/dashboard/Profile';
 import MoviesList from './componets/pages/movie/MoviesList';
 import MovieDetail from './componets/pages/movie/MovieDetail';
 import AddOrEditMovie from './componets/pages/movie/AddOrEditMovie';
+import RequireAuth from './hoc/RequireAuth';
 
 function App() {
   const { theme, colorMode } = useSwitchTheme();
@@ -34,11 +35,39 @@ function App() {
             <Route path="/" element={<MainPage />} />
             <Route path="login" element={<LogIn />} />
             <Route path="signup" element={<SignUp />} />
-            <Route path="profile" element={<Profile />} />
+            <Route
+              path="profile"
+              element={
+                <RequireAuth>
+                  <Profile />
+                </RequireAuth>
+              }
+            />
             <Route path="movies" element={<MoviesList />} />
-            <Route path="movies/add" element={<AddOrEditMovie />} />
-            <Route path="movies/:id" element={<MovieDetail />} />
-            <Route path="movies/edit/:id" element={<AddOrEditMovie />} />
+            <Route
+              path="movies/add"
+              element={
+                <RequireAuth>
+                  <AddOrEditMovie />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="movies/:id"
+              element={
+                <RequireAuth>
+                  <MovieDetail />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="movies/edit/:id"
+              element={
+                <RequireAuth>
+                  <AddOrEditMovie />
+                </RequireAuth>
+              }
+            />
           </Routes>
         </UserAuthContextProvider>
       </>
