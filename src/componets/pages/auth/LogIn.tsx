@@ -4,7 +4,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
-import { useUserAuth } from '../../../context/UserAuthContext';
+import { useUserAuth } from '../../../hooks/useUserAuth';
 import AuthForm from './AuthForm';
 
 function LogIn() {

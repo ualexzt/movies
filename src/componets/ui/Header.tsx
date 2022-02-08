@@ -11,7 +11,7 @@ import LoginButton from './LoginButton';
 import LogoutButton from './LogoutButton';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useUserAuth } from '../../context/UserAuthContext';
+import { useUserAuth } from '../../hooks/useUserAuth';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',

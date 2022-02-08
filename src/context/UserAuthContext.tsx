@@ -1,19 +1,11 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { Auth, getAuth, onAuthStateChanged } from 'firebase/auth';
-import { IUser, TypeSetState } from '../types';
-
+import React, { useEffect, useState } from 'react';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { User } from '../types';
+import { userAuthContext } from '../hooks/useUserAuth';
 import { app } from '../firebaseConfig';
 
-interface IContext {
-  user: IUser | null;
-  setUser: TypeSetState<IUser | null>;
-  auth: Auth;
-}
-
-const userAuthContext = createContext<IContext>({} as IContext);
-
 export function UserAuthContextProvider({ children }: any) {
-  const [user, setUser] = useState<IUser | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const auth = getAuth(app);
 
   useEffect(() => {
@@ -35,8 +27,4 @@ export function UserAuthContextProvider({ children }: any) {
   return (
     <userAuthContext.Provider value={{ user, setUser, auth }}>{children}</userAuthContext.Provider>
   );
-}
-
-export function useUserAuth() {
-  return useContext(userAuthContext);
 }

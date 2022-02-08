@@ -8,39 +8,53 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React from 'react';
-import { addDoc, collection } from 'firebase/firestore';
-import { db } from '../../../firebaseConfig';
+import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
+import { useUserAuth } from '../../../hooks/useUserAuth';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Movie } from '../../../types';
+import { addNewMovie, editMovie, getMovie } from './movies.service';
+import firebase from 'firebase/compat';
+import DocumentData = firebase.firestore.DocumentData;
 
-function AddMovie() {
-  const addMovieForm = useFormik({
+function AddOrEditMovie() {
+  const { user } = useUserAuth();
+  const params = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    async function detail() {
+      const docSnap: DocumentData | undefined = await getMovie(params.id);
+      await addMovieForm.setValues(docSnap?.data() as Movie);
+    }
+
+    if (params.id) detail();
+  }, []);
+
+  const addMovieForm = useFormik<Movie>({
     initialValues: {
       title: '',
       director: '',
       description: '',
       duration: '',
       price: '',
-      featured: '',
+      featured: false,
+      img: '',
     },
     onSubmit: async (values, { resetForm }) => {
-      try {
-        const docRef = await addDoc(collection(db, 'movies'), {
-          title: values.title,
-          director: values.director,
-          description: values.description,
-          duration: values.duration,
-          price: values.price,
-          featured: values.featured,
-          img: 'https://peopletalk.ru/wp-content/uploads/2020/06/mstiteli-640x360.jpg',
-        });
-        resetForm();
-        console.log('Document written with ID: ', docRef.id);
-      } catch (e) {
-        console.error('Error adding document: ', e);
+      // if (image) uploadImage(image);
+      if (params.id) {
+        await editMovie(values, params.id);
+        navigate(`/movies/${params.id}`);
+      } else {
+        await addNewMovie(user, values, resetForm);
       }
     },
   });
+
+  // const handleUpload = () => {
+  //   uploadImage(image);
+  // };
 
   return (
     <>
@@ -56,11 +70,13 @@ function AddMovie() {
           <Typography component="h1" variant="h5">
             Add movies to store
           </Typography>
+
           <form onSubmit={addMovieForm.handleSubmit}>
             <Box sx={{ mt: 3 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
+                    id="title"
                     required
                     fullWidth
                     label="Movie title"
@@ -95,13 +111,35 @@ function AddMovie() {
                     {...addMovieForm.getFieldProps('description')}
                   />
                 </Grid>
+                {/* <Grid item xs={12}> */}
+                {/*   <TextField */}
+                {/*     fullWidth */}
+                {/*     id="img" */}
+                {/*     name="img" */}
+                {/*     type="file" */}
+                {/*     onChange={(e: ChangeEvent<HTMLInputElement>) => { */}
+                {/*       if (e.target.files) { */}
+                {/*         console.log(e.target.files[0].name); */}
+                {/*         setImage(e.target.files[0]); */}
+                {/*       } */}
+                {/*     }} */}
+                {/*   /> */}
+                {/* </Grid> */}
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        color="primary"
+                        id="featured"
+                        checked={addMovieForm.values.featured}
+                        onChange={addMovieForm.handleChange}
+                      />
+                    }
+                    label="Featured"
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox color="primary" {...addMovieForm.getFieldProps('featured')} />}
-                  label="Featured"
-                />
-              </Grid>
+
               <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                 Sign Up
               </Button>
@@ -113,4 +151,4 @@ function AddMovie() {
   );
 }
 
-export default AddMovie;
+export default AddOrEditMovie;

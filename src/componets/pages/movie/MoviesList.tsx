@@ -9,12 +9,16 @@ function MoviesList() {
   const [movies, setMovies] = useState<Movie[]>([]);
 
   useEffect(() => {
+    let isMounted = true;
     const moviesRef = collection(db, 'movies');
     const q = query(moviesRef);
     onSnapshot(q, (snapshot) => {
       const moviesArr = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setMovies(moviesArr as Movie[]);
+      if (isMounted) setMovies(moviesArr as Movie[]);
     });
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (

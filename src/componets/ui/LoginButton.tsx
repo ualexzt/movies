@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { getAuth, signOut } from 'firebase/auth';
 import { app } from '../../firebaseConfig';
-import { useUserAuth } from '../../context/UserAuthContext';
+import { useUserAuth } from '../../hooks/useUserAuth';
 
 const auth = getAuth(app);
 
@@ -15,6 +15,7 @@ function LoginButton() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
   const { setUser } = useUserAuth();
+
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -24,13 +25,14 @@ function LoginButton() {
   };
 
   const handleLogOut = async () => {
-    await signOut(auth)
-      .then(() => {
-        setAnchorElUser(null);
-        setUser(() => null);
-        navigate('/');
-      })
-      .catch((e) => console.log(e.message));
+    try {
+      await signOut(auth);
+      setAnchorElUser(null);
+      setUser(() => null);
+      navigate('/');
+    } catch (e: any) {
+      console.log(e.message);
+    }
   };
   return (
     <>

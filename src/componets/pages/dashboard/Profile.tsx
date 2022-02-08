@@ -1,5 +1,5 @@
 import React from 'react';
-import { useUserAuth } from '../../../context/UserAuthContext';
+import { useUserAuth } from '../../../hooks/useUserAuth';
 
 function Profile() {
   const { user } = useUserAuth();

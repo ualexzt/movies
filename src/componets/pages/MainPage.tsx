@@ -3,7 +3,7 @@ import { Box, Button, CardMedia, Container, Typography } from '@mui/material';
 import { Login } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import HeaderImg from '../../assets/img/BEST-MOVIES.jpg';
-import { useUserAuth } from '../../context/UserAuthContext';
+import { useUserAuth } from '../../hooks/useUserAuth';
 
 function MainPage() {
   const navigate = useNavigate();
@@ -25,9 +25,7 @@ function MainPage() {
         <Typography component="h1" variant="h6">
           Ready to watch? Create or restart your membership.
         </Typography>
-        {user !== null ? (
-          <></>
-        ) : (
+        {!user && (
           <Button
             variant="contained"
             startIcon={<Login />}

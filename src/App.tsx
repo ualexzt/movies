@@ -13,7 +13,7 @@ import { UserAuthContextProvider } from './context/UserAuthContext';
 import Profile from './componets/pages/dashboard/Profile';
 import MoviesList from './componets/pages/movie/MoviesList';
 import MovieDetail from './componets/pages/movie/MovieDetail';
-import AddMovie from './componets/pages/movie/AddMovie';
+import AddOrEditMovie from './componets/pages/movie/AddOrEditMovie';
 
 function App() {
   const { theme, colorMode } = useSwitchTheme();
@@ -36,8 +36,9 @@ function App() {
             <Route path="signup" element={<SignUp />} />
             <Route path="profile" element={<Profile />} />
             <Route path="movies" element={<MoviesList />} />
-            <Route path="movies/add" element={<AddMovie />} />
+            <Route path="movies/add" element={<AddOrEditMovie />} />
             <Route path="movies/:id" element={<MovieDetail />} />
+            <Route path="movies/edit/:id" element={<AddOrEditMovie />} />
           </Routes>
         </UserAuthContextProvider>
       </>

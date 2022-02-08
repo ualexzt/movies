@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 export type TypeSetState<T> = Dispatch<SetStateAction<T>>;
 
-export interface IUser {
+export interface User {
   id: string;
   email: string | null;
 }
@@ -13,7 +13,8 @@ export interface Movie {
   director: string;
   duration: string;
   price: string;
-  img: string;
+  img?: string;
   featured: boolean;
   description: string;
+  author?: string;
 }
