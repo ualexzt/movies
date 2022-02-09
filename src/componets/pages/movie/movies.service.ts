@@ -71,8 +71,8 @@ export const editMovie = async (values: Movie, paramId: string) => {
       featured: values.featured,
       rate: values.rate,
     });
-  } catch (e: any) {
-    console.log(e.message);
+  } catch (e) {
+    if (e instanceof Error) console.log(e.message);
   }
 };
 
@@ -81,14 +81,14 @@ export const getMovie = async (id: string | undefined) => {
   try {
     return await getDoc(docRef);
   } catch (e) {
-    console.log('No such document!');
+    if (e instanceof Error) console.log(e.message);
   }
 };
 
 export const deleteMovie = async (id: string | undefined) => {
   try {
     await deleteDoc(doc(db, 'movies', `${id}`));
-  } catch (e: any) {
-    console.log(e.message);
+  } catch (e) {
+    if (e instanceof Error) console.log(e.message);
   }
 };

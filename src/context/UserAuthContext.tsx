@@ -22,7 +22,7 @@ export function UserAuthContextProvider({ children }: { children: JSX.Element | 
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [auth]);
 
   return (
     <userAuthContext.Provider value={{ user, setUser, auth }}>{children}</userAuthContext.Provider>

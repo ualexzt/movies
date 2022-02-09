@@ -7,8 +7,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import UserMenu from './UserMenu';
 import LoginButton from './LoginButton';
-import LogoutButton from './LogoutButton';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../../hooks/useUserAuth';
@@ -94,7 +94,7 @@ export default function Header() {
             </SearchIconWrapper>
             <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
           </Search>
-          {user !== null ? <LoginButton /> : <LogoutButton />}
+          {user !== null ? <UserMenu /> : <LoginButton />}
         </Toolbar>
       </AppBar>
     </Box>
