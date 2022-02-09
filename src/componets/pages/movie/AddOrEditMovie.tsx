@@ -1,20 +1,11 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  FormControlLabel,
-  Grid,
-  TextField,
-  Typography,
-} from '@mui/material';
-import React, { useEffect } from 'react';
-import { useFormik } from 'formik';
-import { useUserAuth } from '../../../hooks/useUserAuth';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Movie } from '../../../types';
-import { addNewMovie, editMovie, getMovie } from './movies.service';
-import { DocumentData } from 'firebase/firestore';
+import { Box, Button, Checkbox, Container, FormControlLabel, Grid, TextField, Typography } from "@mui/material";
+import React, { useEffect } from "react";
+import { useFormik } from "formik";
+import { useUserAuth } from "../../../hooks/useUserAuth";
+import { useNavigate, useParams } from "react-router-dom";
+import { Movie } from "../../../types";
+import { addNewMovie, editMovie, getMovie } from "./movies.service";
+import { DocumentData } from "firebase/firestore";
 
 function AddOrEditMovie() {
   const { user } = useUserAuth();
@@ -32,13 +23,13 @@ function AddOrEditMovie() {
 
   const addMovieForm = useFormik<Movie>({
     initialValues: {
-      title: '',
-      director: '',
-      description: '',
-      duration: '',
-      price: '',
+      title: "",
+      director: "",
+      description: "",
+      duration: "",
+      price: "",
       featured: false,
-      img: '',
+      img: ""
     },
     onSubmit: async (values, { resetForm }) => {
       // if (image) uploadImage(image);
@@ -48,7 +39,7 @@ function AddOrEditMovie() {
       } else {
         await addNewMovie(user, values, resetForm);
       }
-    },
+    }
   });
 
   // const handleUpload = () => {
@@ -61,9 +52,9 @@ function AddOrEditMovie() {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center"
           }}
         >
           <Typography component="h1" variant="h5">
@@ -80,7 +71,7 @@ function AddOrEditMovie() {
                     fullWidth
                     label="Movie title"
                     autoFocus
-                    {...addMovieForm.getFieldProps('title')}
+                    {...addMovieForm.getFieldProps("title")}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -88,18 +79,18 @@ function AddOrEditMovie() {
                     required
                     fullWidth
                     label="Film director"
-                    {...addMovieForm.getFieldProps('director')}
+                    {...addMovieForm.getFieldProps("director")}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
                     label="Duration"
-                    {...addMovieForm.getFieldProps('duration')}
+                    {...addMovieForm.getFieldProps("duration")}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField fullWidth label="Price" {...addMovieForm.getFieldProps('price')} />
+                  <TextField fullWidth label="Price" {...addMovieForm.getFieldProps("price")} />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
@@ -107,7 +98,7 @@ function AddOrEditMovie() {
                     rows={4}
                     fullWidth
                     label="Description"
-                    {...addMovieForm.getFieldProps('description')}
+                    {...addMovieForm.getFieldProps("description")}
                   />
                 </Grid>
                 {/* <Grid item xs={12}> */}
@@ -140,7 +131,7 @@ function AddOrEditMovie() {
               </Grid>
 
               <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                Sign Up
+                Apply
               </Button>
             </Box>
           </form>
