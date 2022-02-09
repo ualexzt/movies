@@ -65,7 +65,7 @@ function MovieDetail() {
                   <Button variant="outlined" sx={{ mr: 1 }} onClick={() => navigate(-1)}>
                     Go Back
                   </Button>
-                  {user?.email === movie.author && (
+                  {user?.email === movie.author && movie.author != null && (
                     <>
                       <Button
                         variant="outlined"
