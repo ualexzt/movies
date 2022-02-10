@@ -3,11 +3,7 @@ import Box from '@mui/material/Box';
 import { Avatar, IconButton, Link, Menu, MenuItem, Tooltip } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { getAuth, signOut } from 'firebase/auth';
-import { app } from '../../firebaseConfig';
 import { useUserAuth } from '../../hooks/useUserAuth';
-
-const auth = getAuth(app);
 
 // import { signOut } from 'firebase/auth';
 
@@ -24,9 +20,8 @@ function UserMenu() {
     setAnchorElUser(null);
   };
 
-  const handleLogOut = async () => {
+  const handleLogOut = () => {
     try {
-      await signOut(auth);
       setUser(() => null);
       navigate('/');
     } catch (e) {
