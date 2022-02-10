@@ -43,7 +43,6 @@ function AddOrEditMovie() {
       author: '',
     },
     onSubmit: (values, { resetForm }) => {
-      // if (image) uploadImage(image);
       if (params.id) {
         editMovie(Number(params.id), values, user).then(() => navigate(`/movies/${params.id}`));
       } else {
