@@ -1,4 +1,5 @@
 import React from 'react';
+import NoImage from '../../../assets/img/noimage.jpg';
 import {
   Button,
   Card,
@@ -22,7 +23,7 @@ function MovieItem({ movie }: MovieProps) {
     <>
       <Zoom in={true} style={{ transitionDelay: '500ms' }}>
         <Card sx={{ m: 2, width: 240 }}>
-          <CardMedia component="img" height="140" image={movie.img} alt="green iguana" />
+          <CardMedia component="img" height="140" image={movie.img || NoImage} alt="no image" />
           <CardContent>
             <Typography gutterBottom variant="h6" component="div">
               {movie.title}

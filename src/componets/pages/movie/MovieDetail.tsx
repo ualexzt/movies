@@ -3,7 +3,8 @@ import { Box, Button, CardMedia, Grid, Paper, Rating, Typography } from '@mui/ma
 import { useNavigate, useParams } from 'react-router-dom';
 import { Movie } from '../../../types';
 import { useUserAuth } from '../../../hooks/useUserAuth';
-import { editMovie, getMovie } from './movies.service';
+import { deleteMovie, editMovie, getMovie } from './movies.service';
+import NoImage from '../../../assets/img/noimage.jpg';
 
 function MovieDetail() {
   const params = useParams();
@@ -20,19 +21,25 @@ function MovieDetail() {
   }, [params.id]);
 
   const handleDelete = () => {
-    // deleteMovie(params.id);
-    navigate('/movies');
+    deleteMovie(Number(params.id)).then(() => navigate('/movies'));
   };
 
   const handleRate = (event: SyntheticEvent, newValue: number | null) => {
     if (!newValue) {
       return;
     }
-    newValue = (newValue + movie.rate) / 2;
-    editMovie(Number(params.id), {
-      ...movie,
-      rate: newValue,
-    }).then((res) => {
+    if (movie.rate) {
+      newValue = (newValue + movie.rate) / 2;
+    }
+
+    editMovie(
+      Number(params.id),
+      {
+        ...movie,
+        rate: newValue,
+      },
+      user
+    ).then((res) => {
       if (res) {
         setRate(res.data.rate);
       }
@@ -44,7 +51,12 @@ function MovieDetail() {
       <Paper sx={{ my: 2, p: 2, mx: 'auto', maxWidth: 'lg', flexGrow: 1 }}>
         <Grid container spacing={2}>
           <Grid item>
-            <CardMedia component="img" height="240" image={movie?.img} alt={movie.title} />
+            <CardMedia
+              component="img"
+              height="240"
+              image={movie?.img || NoImage}
+              alt={movie.title}
+            />
           </Grid>
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>

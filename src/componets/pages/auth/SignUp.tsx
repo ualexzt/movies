@@ -19,7 +19,7 @@ function SignUp() {
     },
     onSubmit: async (values) => {
       signUp(values.email, values.password).then((res) => setUser(res));
-      navigate('/profile');
+      navigate('/');
     },
   });
   return (

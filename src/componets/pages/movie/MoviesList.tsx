@@ -9,7 +9,7 @@ function MoviesList() {
 
   useEffect(() => {
     getMovies().then((res) => setMovies(res.data));
-  }, []);
+  }, [setMovies]);
 
   return (
     <Container maxWidth="lg" sx={{ display: 'flex', flexWrap: 'wrap', mt: 2 }}>

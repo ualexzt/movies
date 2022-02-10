@@ -5,9 +5,9 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 export const logIn = async (email: string, password: string) => {
   let user = null;
-  await axios.get<User>(apiUrl + `/users?email=${email}`).then((res) => {
-    if (res.data && res.data.password === password) {
-      user = res.data;
+  await axios.get<User[]>(apiUrl + `/users?email=${email}`).then((res) => {
+    if (res.data && res.data[0].password === password) {
+      user = res.data[0];
     }
   });
   return user;

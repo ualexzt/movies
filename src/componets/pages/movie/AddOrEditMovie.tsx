@@ -45,10 +45,9 @@ function AddOrEditMovie() {
     onSubmit: (values, { resetForm }) => {
       // if (image) uploadImage(image);
       if (params.id) {
-        editMovie(Number(params.id), values);
-        navigate(`/movies/${params.id}`);
+        editMovie(Number(params.id), values, user).then(() => navigate(`/movies/${params.id}`));
       } else {
-        addNewMovie(user, values, resetForm);
+        addNewMovie(user, values, resetForm).then(() => navigate(`/movies`));
       }
     },
   });
@@ -112,20 +111,14 @@ function AddOrEditMovie() {
                     {...addMovieForm.getFieldProps('description')}
                   />
                 </Grid>
-                {/* <Grid item xs={12}> */}
-                {/*   <TextField */}
-                {/*     fullWidth */}
-                {/*     id="img" */}
-                {/*     name="img" */}
-                {/*     type="file" */}
-                {/*     onChange={(e: ChangeEvent<HTMLInputElement>) => { */}
-                {/*       if (e.target.files) { */}
-                {/*         console.log(e.target.files[0].name); */}
-                {/*         setImage(e.target.files[0]); */}
-                {/*       } */}
-                {/*     }} */}
-                {/*   /> */}
-                {/* </Grid> */}
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Image"
+                    type="text"
+                    {...addMovieForm.getFieldProps('img')}
+                  />
+                </Grid>
                 <Grid item xs={12}>
                   <FormControlLabel
                     control={
