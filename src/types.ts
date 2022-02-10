@@ -5,10 +5,11 @@ export type TypeSetState<T> = Dispatch<SetStateAction<T>>;
 export interface User {
   id: string;
   email: string | null;
+  password: string | null;
 }
 
 export interface Movie {
-  id?: string;
+  id?: number;
   title: string;
   director: string;
   duration: string;
@@ -16,6 +17,6 @@ export interface Movie {
   img?: string;
   featured: boolean;
   description: string;
-  author?: string;
-  rate?: number;
+  author: string;
+  rate: number;
 }
