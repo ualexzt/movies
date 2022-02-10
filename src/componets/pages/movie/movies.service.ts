@@ -17,27 +17,19 @@ export const addNewMovie = async (
   values: Movie,
   resetForm: (nextState?: Partial<FormikState<Movie>> | undefined) => void
 ) => {
-  try {
-    await axios.post<Movie>(apiUrl + `/films`, {
-      ...values,
-      author: user?.email,
-      rate: 0,
-    });
-    resetForm();
-  } catch (e) {
-    console.error('Error adding document: ', e);
-  }
+  await axios.post<Movie>(apiUrl + `/films`, {
+    ...values,
+    author: user?.email,
+    rate: 0,
+  });
+  resetForm();
 };
 
 export const editMovie = async (id: number, values: Movie, user: User | null) => {
-  try {
-    return await axios.put<Movie>(apiUrl + `/films/${id}`, {
-      ...values,
-      author: user?.email,
-    });
-  } catch (e) {
-    if (e instanceof Error) console.log(e.message);
-  }
+  return await axios.put<Movie>(apiUrl + `/films/${id}`, {
+    ...values,
+    author: user?.email,
+  });
 };
 
 export const deleteMovie = async (id: number) => {
