@@ -52,10 +52,6 @@ function AddOrEditMovie() {
     },
   });
 
-  // const handleUpload = () => {
-  //   uploadImage(image);
-  // };
-
   return (
     <>
       <Container component="main" maxWidth="xs">
