@@ -9,7 +9,7 @@ import { signUp } from './auth.service';
 
 function SignUp() {
   const navigate = useNavigate();
-  const { setUser } = useUserAuth();
+  const { auth, setUser } = useUserAuth();
   const [error, setError] = useState('');
 
   const formik = useFormik({
@@ -18,8 +18,16 @@ function SignUp() {
       password: '',
     },
     onSubmit: async (values) => {
-      signUp(values.email, values.password).then((res) => setUser(res));
-      navigate('/profile');
+      try {
+        const userCredentials = await signUp(auth, values.email, values.password);
+        setUser({
+          id: userCredentials.user.uid,
+          email: userCredentials.user.email,
+        });
+        navigate('/');
+      } catch (e: any) {
+        setError(e.message);
+      }
     },
   });
   return (

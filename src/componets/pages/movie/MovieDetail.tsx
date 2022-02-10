@@ -1,42 +1,40 @@
 import React, { SyntheticEvent, useEffect, useState } from 'react';
 import { Box, Button, CardMedia, Grid, Paper, Rating, Typography } from '@mui/material';
+import { doc, DocumentData, updateDoc } from 'firebase/firestore';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Movie } from '../../../types';
 import { useUserAuth } from '../../../hooks/useUserAuth';
-import { editMovie, getMovie } from './movies.service';
+import { deleteMovie, getMovie } from './movies.service';
+import { db } from '../../../firebaseConfig';
 
 function MovieDetail() {
   const params = useParams();
   const navigate = useNavigate();
   const [movie, setMovie] = useState<Movie>({} as Movie);
-  const [rate, setRate] = useState<number>(0);
+  const [rate, setRate] = useState<number | null>(0);
   const { user } = useUserAuth();
 
   useEffect(() => {
-    getMovie(Number(params.id)).then((res) => {
-      setMovie(res.data);
-      setRate(res.data.rate);
-    });
+    async function detail() {
+      const docSnap: DocumentData | undefined = await getMovie(params.id);
+      setMovie(docSnap?.data());
+      setRate(docSnap?.data().rate);
+    }
+
+    detail();
   }, [params.id]);
 
   const handleDelete = () => {
-    // deleteMovie(params.id);
+    deleteMovie(params.id);
     navigate('/movies');
   };
 
-  const handleRate = (event: SyntheticEvent, newValue: number | null) => {
-    if (!newValue) {
-      return;
-    }
-    newValue = (newValue + movie.rate) / 2;
-    editMovie(Number(params.id), {
-      ...movie,
+  const handleRate = async (event: SyntheticEvent, newValue: number | null) => {
+    const updateMovie = doc(db, 'movies', `${params.id}`);
+    await updateDoc(updateMovie, {
       rate: newValue,
-    }).then((res) => {
-      if (res) {
-        setRate(res.data.rate);
-      }
     });
+    setRate(newValue);
   };
 
   return (

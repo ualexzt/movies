@@ -8,7 +8,7 @@ import AuthForm from './AuthForm';
 import { logIn } from './auth.service';
 
 function LogIn() {
-  const { setUser } = useUserAuth();
+  const { auth, setUser } = useUserAuth();
   const [errors, setErrors] = useState('');
   const navigate = useNavigate();
   const formik = useFormik({
@@ -16,11 +16,15 @@ function LogIn() {
       email: '',
       password: '',
     },
-    onSubmit: (values) => {
-      logIn(values.email, values.password).then((res) => {
-        setUser(res);
-      });
-      navigate('/');
+    onSubmit: async (values) => {
+      try {
+        const userCredentials = await logIn(auth, values.email, values.password);
+        setUser({
+          id: userCredentials.user.uid,
+          email: userCredentials.user.email,
+        });
+        navigate('/');
+      } catch (e) {}
     },
   });
 
@@ -50,7 +54,7 @@ function LogIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Log in
+            Sign in
           </Typography>
           <form onSubmit={formik.handleSubmit}>
             <AuthForm

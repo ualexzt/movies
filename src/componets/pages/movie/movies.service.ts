@@ -1,15 +1,38 @@
-import axios from 'axios';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { db, storage } from '../../../firebaseConfig';
+import { addDoc, collection, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { Movie, User } from '../../../types';
 import { FormikState } from 'formik';
 
-const apiUrl = process.env.REACT_APP_API_URL;
-
-export const getMovies = async () => {
-  return await axios.get<Movie[]>(apiUrl + `/films`);
-};
-
-export const getMovie = async (id: number) => {
-  return await axios.get<Movie>(apiUrl + `/films/${id}`);
+export const uploadImage = (file: any) => {
+  if (!file) return;
+  console.log(file.name);
+  const storageRef = ref(storage, `/image/${Date.now()}.jpg`);
+  const uploadTask = uploadBytesResumable(storageRef, file);
+  uploadTask.on(
+    'state_changed',
+    (snapshot) => {
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log('Upload is ' + progress + '% done');
+      switch (snapshot.state) {
+        case 'paused':
+          console.log('Upload is paused');
+          break;
+        case 'running':
+          console.log('Upload is running');
+          break;
+      }
+    },
+    (err) => {
+      console.log(err);
+    },
+    () => {
+      getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+        console.log(url);
+        // addMovieForm.setFieldValue('img', url);
+      });
+    }
+  );
 };
 
 export const addNewMovie = async (
@@ -18,7 +41,7 @@ export const addNewMovie = async (
   resetForm: (nextState?: Partial<FormikState<Movie>> | undefined) => void
 ) => {
   try {
-    await axios.post(apiUrl + `/films`, {
+    const docRef = await addDoc(collection(db, 'movies'), {
       title: values.title,
       director: values.director,
       description: values.description,
@@ -30,15 +53,16 @@ export const addNewMovie = async (
       rate: 0,
     });
     resetForm();
-    // console.log('Document written with ID: ', docRef.id);
+    console.log('Document written with ID: ', docRef.id);
   } catch (e) {
     console.error('Error adding document: ', e);
   }
 };
 
-export const editMovie = async (id: number, values: Movie) => {
+export const editMovie = async (values: Movie, paramId: string) => {
   try {
-    return await axios.put<Movie>(apiUrl + `/films/${id}`, {
+    const updateMovie = doc(db, 'movies', `${paramId}`);
+    await updateDoc(updateMovie, {
       title: values.title,
       director: values.director,
       description: values.description,
@@ -52,10 +76,19 @@ export const editMovie = async (id: number, values: Movie) => {
   }
 };
 
-// export const deleteMovie = async (id: string | undefined) => {
-//   try {
-//     await deleteDoc(doc(db, 'movies', `${id}`));
-//   } catch (e) {
-//     if (e instanceof Error) console.log(e.message);
-//   }
-// };
+export const getMovie = async (id: string | undefined) => {
+  const docRef = doc(db, 'movies', `${id}`);
+  try {
+    return await getDoc(docRef);
+  } catch (e) {
+    if (e instanceof Error) console.log(e.message);
+  }
+};
+
+export const deleteMovie = async (id: string | undefined) => {
+  try {
+    await deleteDoc(doc(db, 'movies', `${id}`));
+  } catch (e) {
+    if (e instanceof Error) console.log(e.message);
+  }
+};
