@@ -34,7 +34,7 @@ function MovieItem({ movie }: MovieProps) {
             <Rating name="read-only" value={movie.rate} precision={0.5} readOnly />
           </CardContent>
           <CardActions>
-            <Button size="small" onClick={() => navigate(`${movie.id}`)}>
+            <Button size="small" variant="outlined" onClick={() => navigate(`/movies/${movie.id}`)}>
               More
             </Button>
           </CardActions>

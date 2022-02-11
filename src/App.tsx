@@ -15,6 +15,7 @@ import MoviesList from './componets/pages/movie/MoviesList';
 import MovieDetail from './componets/pages/movie/MovieDetail';
 import AddOrEditMovie from './componets/pages/movie/AddOrEditMovie';
 import RequireAuth from './hoc/RequireAuth';
+import FavoriteList from './componets/pages/movie/FavoriteList';
 
 function App() {
   const { theme, colorMode } = useSwitchTheme();
@@ -44,6 +45,7 @@ function App() {
               }
             />
             <Route path="movies" element={<MoviesList />} />
+            <Route path="favorites" element={<FavoriteList />} />
             <Route
               path="movies/add"
               element={

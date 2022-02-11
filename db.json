@@ -6,10 +6,10 @@
       "description": "Жизнь и репутация Питера Паркера оказываются под угрозой, поскольку Мистерио раскрыл всему миру тайну личности Человека-паука. Пытаясь исправить ситуацию, Питер обращается за помощью к Стивену Стрэнджу, но вскоре всё становится намного опаснее.",
       "duration": "200",
       "price": "3",
-      "featured": false,
+      "featured": true,
       "img": "https://upload.wikimedia.org/wikipedia/ru/thumb/6/6e/Spider-Man_%E2%80%94_No_Way_Home_poster.jpg/640px-Spider-Man_%E2%80%94_No_Way_Home_poster.jpg",
       "author": "user@exp.com",
-      "rate": 5,
+      "rate": 3,
       "id": 1
     },
     {

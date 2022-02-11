@@ -4,8 +4,8 @@ import { FormikState } from 'formik';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-export const getMovies = async () => {
-  return await axios.get<Movie[]>(apiUrl + `/films?_sort=title&_order=asc`);
+export const getMovies = async (httpParams = '') => {
+  return await axios.get<Movie[]>(apiUrl + `/films?${httpParams}`);
 };
 
 export const getMovie = async (id: number) => {

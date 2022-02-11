@@ -76,6 +76,7 @@ function AddOrEditMovie() {
                     fullWidth
                     label="Movie title"
                     autoFocus
+                    inputProps={{ maxLength: 50 }}
                     {...addMovieForm.getFieldProps('title')}
                   />
                 </Grid>
@@ -103,6 +104,7 @@ function AddOrEditMovie() {
                     rows={4}
                     fullWidth
                     label="Description"
+                    inputProps={{ maxLength: 250 }}
                     {...addMovieForm.getFieldProps('description')}
                   />
                 </Grid>

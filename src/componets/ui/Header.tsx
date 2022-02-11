@@ -9,9 +9,10 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import UserMenu from './UserMenu';
 import LoginButton from './LoginButton';
-import { Button } from '@mui/material';
+import { Button, IconButton, Menu, MenuItem } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../../hooks/useUserAuth';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -58,45 +59,94 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Header() {
   const { user } = useUserAuth();
   const pages = ['Movies', 'Favorites', 'Bestseller'];
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
   const handleNavigate = (e: BaseSyntheticEvent) => {
     navigate(`/${e.target.id}`);
   };
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography
-            onClick={() => navigate('/')}
-            variant="h5"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, ml: 5, cursor: 'pointer' }}
-          >
-            MOVIE HUNTER
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                id={page}
-                key={page}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-                onClick={handleNavigate}
+    <>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
               >
-                {page}
-              </Button>
-            ))}
-          </Box>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
-          </Search>
-          {user !== null ? <UserMenu /> : <LoginButton />}
-        </Toolbar>
-      </AppBar>
-    </Box>
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block', md: 'none' },
+                }}
+              >
+                {pages.map((page) => (
+                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    <Typography id={page} textAlign="center" onClick={handleNavigate}>
+                      {page}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+            <Typography
+              onClick={() => navigate('/')}
+              variant="h5"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, ml: 5, cursor: 'pointer' }}
+            >
+              MOVIE HUNTER
+            </Typography>
+
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+              {pages.map((page) => (
+                <Button
+                  id={page}
+                  key={page}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                  onClick={handleNavigate}
+                >
+                  {page}
+                </Button>
+              ))}
+            </Box>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
+            </Search>
+            {user !== null ? <UserMenu /> : <LoginButton />}
+          </Toolbar>
+        </AppBar>
+      </Box>
+    </>
   );
 }
