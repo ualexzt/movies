@@ -9,7 +9,7 @@ function MoviesList() {
 
   useEffect(() => {
     getMovies('_sort=title&_order=asc').then((res) => setMovies(res.data));
-  }, [setMovies]);
+  }, []);
 
   return (
     <Container

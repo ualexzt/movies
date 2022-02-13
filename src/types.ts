@@ -14,7 +14,7 @@ export interface Movie {
   director: string;
   duration: string;
   price: string;
-  img: string;
+  img: string | null;
   featured: boolean;
   description: string;
   author: string;

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import NoImage from '../../../assets/img/noimage.jpg';
 import {
   Button,
   Card,
   CardActions,
   CardContent,
+  CardHeader,
   CardMedia,
   Rating,
   Typography,
@@ -12,6 +13,8 @@ import {
 } from '@mui/material';
 import { Movie } from '../../../types';
 import { useNavigate } from 'react-router-dom';
+import StarOutlineIcon from '@mui/icons-material/StarOutline';
+import StarIcon from '@mui/icons-material/Star';
 
 interface MovieProps {
   movie: Movie;
@@ -19,15 +22,33 @@ interface MovieProps {
 
 function MovieItem({ movie }: MovieProps) {
   const navigate = useNavigate();
+  const [favorite, setFavorite] = useState(false);
+
   return (
     <>
       <Zoom in={true} style={{ transitionDelay: '500ms' }}>
-        <Card sx={{ m: 2, width: 240 }}>
-          <CardMedia component="img" height="140" image={movie.img || NoImage} alt="no image" />
+        <Card
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            m: 2,
+            width: 240,
+          }}
+        >
+          <CardHeader
+            title={movie.title}
+            action={
+              favorite ? (
+                <StarIcon color="warning" onClick={() => setFavorite((prevState) => !prevState)} />
+              ) : (
+                <StarOutlineIcon onClick={() => setFavorite((prevState) => !prevState)} />
+              )
+            }
+            disableTypography
+          />
+          <CardMedia component="img" height="200" image={movie.img || NoImage} alt="no image" />
           <CardContent>
-            <Typography gutterBottom variant="h6" component="div">
-              {movie.title}
-            </Typography>
             <Typography variant="body2" color="text.secondary">
               Director: {movie.director}
             </Typography>
