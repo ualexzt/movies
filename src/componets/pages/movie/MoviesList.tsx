@@ -8,7 +8,7 @@ function MoviesList() {
   const [movies, setMovies] = useState<Movie[]>([]);
 
   useEffect(() => {
-    getMovies('_sort=title&_order=asc').then((res) => setMovies(res.data));
+    getMovies().then((res) => setMovies(res.data));
   }, []);
 
   return (
@@ -18,7 +18,7 @@ function MoviesList() {
     >
       {movies.length < 0
         ? 'Don`t create movies list'
-        : movies.map((movie) => <MovieItem key={movie.id} movie={movie} />)}
+        : movies.map((movie) => <MovieItem key={movie._id} movie={movie} />)}
     </Container>
   );
 }

@@ -4,6 +4,7 @@ import { Avatar, IconButton, Link, Menu, MenuItem, Tooltip } from '@mui/material
 import Typography from '@mui/material/Typography';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../../hooks/useUserAuth';
+import $api from '../../interseptors/interseptor';
 
 // import { signOut } from 'firebase/auth';
 
@@ -20,9 +21,11 @@ function UserMenu() {
     setAnchorElUser(null);
   };
 
-  const handleLogOut = () => {
+  const handleLogOut = async () => {
     try {
+      await $api.post('/auth/logout');
       setUser(() => null);
+      localStorage.removeItem('token');
       navigate('/');
     } catch (e) {
       if (e instanceof Error) console.log(e.message);

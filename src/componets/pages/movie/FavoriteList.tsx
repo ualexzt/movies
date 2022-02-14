@@ -8,7 +8,7 @@ function FavoriteList() {
   const [favorite, setFavorite] = useState<Movie[]>([]);
 
   useEffect(() => {
-    getMovies('featured=true').then((res) => setFavorite(res.data));
+    getMovies().then((res) => setFavorite(res.data));
   }, [setFavorite]);
 
   return (
@@ -18,7 +18,7 @@ function FavoriteList() {
     >
       {favorite.length < 0
         ? 'Don`t create movies list'
-        : favorite.map((movie) => <MovieItem key={movie.id} movie={movie} />)}
+        : favorite.map((movie) => <MovieItem key={movie._id} movie={movie} />)}
     </Container>
   );
 }

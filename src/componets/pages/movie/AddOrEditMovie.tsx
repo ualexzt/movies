@@ -23,7 +23,7 @@ function AddOrEditMovie() {
   const [image, setImage] = useState<any>(null);
   useEffect(() => {
     function detail() {
-      getMovie(Number(params.id)).then((res) => {
+      getMovie(params.id).then((res) => {
         addMovieForm.setValues(res.data);
         setImage(res.data.img);
       });
@@ -55,7 +55,7 @@ function AddOrEditMovie() {
     },
     onSubmit: (values, { resetForm }) => {
       if (params.id) {
-        editMovie(Number(params.id), values, user).then(() => navigate(`/movies/${params.id}`));
+        editMovie(params.id, values, user).then(() => navigate(`/movies/${params.id}`));
       } else {
         addNewMovie(user, values, resetForm).then(() => navigate(`/movies`));
       }

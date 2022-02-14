@@ -16,11 +16,15 @@ function LogIn() {
       email: '',
       password: '',
     },
-    onSubmit: (values) => {
-      logIn(values.email, values.password).then((res) => {
-        setUser(res);
-      });
-      navigate('/');
+    onSubmit: async (values) => {
+      try {
+        const response = await logIn(values.email, values.password);
+        localStorage.setItem('token', response.data.accessToken);
+        setUser(response.data.user);
+        navigate('/');
+      } catch (e: any) {
+        console.log(e.response?.data?.message);
+      }
     },
   });
 
@@ -54,6 +58,7 @@ function LogIn() {
           </Typography>
           <form onSubmit={formik.handleSubmit}>
             <AuthForm
+              type="login"
               email={formik.values.email}
               password={formik.values.password}
               handleChange={formik.handleChange}

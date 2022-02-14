@@ -14,14 +14,14 @@ function MovieDetail() {
   const { user } = useUserAuth();
 
   useEffect(() => {
-    getMovie(Number(params.id)).then((res) => {
+    getMovie(params.id).then((res) => {
       setMovie(res.data);
       setRate(res.data.rate);
     });
   }, [params.id]);
 
   const handleDelete = () => {
-    deleteMovie(Number(params.id)).then(() => navigate('/movies'));
+    deleteMovie(params.id).then(() => navigate('/movies'));
   };
 
   const handleRate = (event: SyntheticEvent, newValue: number | null) => {
@@ -32,14 +32,7 @@ function MovieDetail() {
       newValue = (newValue + movie.rate) / 2;
     }
 
-    editMovie(
-      Number(params.id),
-      {
-        ...movie,
-        rate: newValue,
-      },
-      user
-    ).then((res) => {
+    editMovie(params.id, { ...movie, rate: newValue }, user).then((res) => {
       if (res) {
         setRate(res.data.rate);
       }
