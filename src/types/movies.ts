@@ -7,11 +7,8 @@ export interface MoviesState {
 }
 
 export enum MoviesActionType {
-  // eslint-disable-next-line no-unused-vars
   FETCH_MOVIES = 'FETCH_MOVIES',
-  // eslint-disable-next-line no-unused-vars
   FETCH_MOVIES_SUCCESS = 'FETCH_MOVIES_SUCCESS',
-  // eslint-disable-next-line no-unused-vars
   FETCH_MOVIES_ERROR = 'FETCH_MOVIES_ERROR',
 }
 

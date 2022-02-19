@@ -5,15 +5,15 @@ const initialState: MoviesState = {
   loading: false,
   error: null,
 };
-export const moviesReducer = (store = initialState, action: MoviesAction): MoviesState => {
+export const moviesReducer = (state = initialState, action: MoviesAction): MoviesState => {
   switch (action.type) {
     case MoviesActionType.FETCH_MOVIES:
-      return { loading: true, error: null, movies: [] };
+      return { ...state, loading: true, error: null, movies: [] };
     case MoviesActionType.FETCH_MOVIES_SUCCESS:
-      return { loading: false, error: null, movies: action.payload };
+      return { ...state, loading: false, error: null, movies: action.payload };
     case MoviesActionType.FETCH_MOVIES_ERROR:
-      return { loading: false, error: action.payload, movies: [] };
+      return { ...state, loading: false, error: action.payload, movies: [] };
     default:
-      return store;
+      return state;
   }
 };
