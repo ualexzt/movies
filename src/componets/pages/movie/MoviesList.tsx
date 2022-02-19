@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Container } from '@mui/material';
+import { Alert, Container } from '@mui/material';
 import MovieItem from './MovieItem';
 import useTypedSelector from '../../../hooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
@@ -13,14 +13,13 @@ function MoviesList() {
     dispatch(fetchMovies());
   }, []);
 
-  if (error) {
-    return <h1>{error}</h1>;
-  }
   return (
     <Container
       maxWidth="lg"
       sx={{ display: 'flex', flexWrap: 'wrap', mt: 2, justifyContent: 'center' }}
     >
+      {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
+      {error && <Alert severity="error">{error}</Alert>}
       {loading ? (
         <HashLoader color="orange" loading={loading} size={50} />
       ) : (
