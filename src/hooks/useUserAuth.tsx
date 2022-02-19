@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { TypeSetState, User } from '../types';
+import { TypeSetState, User } from '../types/types';
 
 interface IContext {
   user: User | null;

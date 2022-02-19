@@ -1,4 +1,4 @@
-import { Movie, User } from '../../../types';
+import { Movie, User } from '../../../types/types';
 import { FormikState } from 'formik';
 import $api from '../../../interseptors/interseptor';
 

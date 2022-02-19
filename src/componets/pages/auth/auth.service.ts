@@ -1,4 +1,4 @@
-import { AuthInterface } from '../../../types';
+import { AuthInterface } from '../../../types/types';
 import $api from '../../../interseptors/interseptor';
 import axios from 'axios';
 

@@ -13,7 +13,7 @@ import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useUserAuth } from '../../../hooks/useUserAuth';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Movie } from '../../../types';
+import { Movie } from '../../../types/types';
 import { addNewMovie, editMovie, getMovie } from './movies.service';
 
 function AddOrEditMovie() {

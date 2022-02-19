@@ -11,7 +11,7 @@ import {
   Typography,
   Zoom,
 } from '@mui/material';
-import { Movie } from '../../../types';
+import { Movie } from '../../../types/types';
 import { useNavigate } from 'react-router-dom';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import StarIcon from '@mui/icons-material/Star';

@@ -1,7 +1,7 @@
 import React, { SyntheticEvent, useEffect, useState } from 'react';
 import { Box, Button, CardMedia, Grid, Paper, Rating, Typography } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Movie } from '../../../types';
+import { Movie } from '../../../types/types';
 import { useUserAuth } from '../../../hooks/useUserAuth';
 import { deleteMovie, editMovie, getMovie } from './movies.service';
 import NoImage from '../../../assets/img/noimage.jpg';

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Movie } from '../../../types';
+import { Movie } from '../../../types/types';
 import { getMovies } from './movies.service';
 import { Container } from '@mui/material';
 import MovieItem from './MovieItem';

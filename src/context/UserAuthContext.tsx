@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { User } from '../types';
+import { User } from '../types/types';
 import { userAuthContext } from '../hooks/useUserAuth';
 import { checkAuth } from '../componets/pages/auth/auth.service';
 
