@@ -3,7 +3,7 @@ import { User } from '../types';
 import { userAuthContext } from '../hooks/useUserAuth';
 import { checkAuth } from '../componets/pages/auth/auth.service';
 
-export function UserAuthContextProvider({ children }: { children: JSX.Element | JSX.Element[] }) {
+export function UserAuthContextProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {

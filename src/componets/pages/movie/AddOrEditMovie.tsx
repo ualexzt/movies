@@ -34,13 +34,16 @@ function AddOrEditMovie() {
 
   const handleImage = (e: BaseSyntheticEvent) => {
     const file = e.target.files[0];
-    const fileReader = new FileReader();
-    fileReader.onload = function (e) {
-      setImage(e.target?.result);
-      addMovieForm.setFieldValue('img', e.target?.result);
-    };
-    fileReader.readAsDataURL(file);
+    if (file) {
+      const fileReader = new FileReader();
+      fileReader.onload = function (e) {
+        setImage(e.target?.result);
+        addMovieForm.setFieldValue('img', e.target?.result);
+      };
+      fileReader.readAsDataURL(file);
+    }
   };
+
   const addMovieForm = useFormik<Movie>({
     initialValues: {
       title: '',
@@ -73,72 +76,101 @@ function AddOrEditMovie() {
             alignItems: 'center',
           }}
         >
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" sx={{ mb: 2 }}>
             Add movies to store
           </Typography>
 
           <form onSubmit={addMovieForm.handleSubmit}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  id="title"
-                  required
-                  fullWidth
-                  label="Movie title"
-                  autoFocus
-                  inputProps={{ maxLength: 50 }}
-                  {...addMovieForm.getFieldProps('title')}
+              <Grid
+                item
+                xs={4}
+                direction="column"
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <input
+                  type="file"
+                  onChange={handleImage}
+                  id="upload-file"
+                  style={{ display: 'none' }}
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  label="Film director"
-                  {...addMovieForm.getFieldProps('director')}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField fullWidth label="Duration" {...addMovieForm.getFieldProps('duration')} />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField fullWidth label="Price" {...addMovieForm.getFieldProps('price')} />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  multiline
-                  rows={4}
-                  fullWidth
-                  label="Description"
-                  inputProps={{ maxLength: 250 }}
-                  {...addMovieForm.getFieldProps('description')}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                {image && (
-                  <CardMedia
-                    component="img"
-                    sx={{ width: 151 }}
-                    image={image}
-                    alt="Live from space album cover"
-                  />
-                )}
-              </Grid>
-              <Grid item xs={6}>
-                <TextField fullWidth type="file" onChange={handleImage} />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      color="primary"
-                      id="featured"
-                      checked={addMovieForm.values.featured}
-                      onChange={addMovieForm.handleChange}
+                <label htmlFor="upload-file">
+                  {image ? (
+                    <CardMedia
+                      component="img"
+                      sx={{ width: 160, cursor: 'pointer' }}
+                      image={image}
+                      alt="Live from space album cover"
                     />
-                  }
-                  label="Featured"
-                />
+                  ) : (
+                    <Button
+                      component="span"
+                      variant="outlined"
+                      sx={{ textAlign: 'center', width: 128, height: 128 }}
+                    >
+                      Add picture
+                    </Button>
+                  )}
+                </label>
+              </Grid>
+              <Grid item container spacing={2} xs={8}>
+                <Grid item xs={12}>
+                  <TextField
+                    id="title"
+                    required
+                    fullWidth
+                    label="Movie title"
+                    autoFocus
+                    inputProps={{ maxLength: 50 }}
+                    {...addMovieForm.getFieldProps('title')}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    label="Film director"
+                    {...addMovieForm.getFieldProps('director')}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    label="Duration"
+                    {...addMovieForm.getFieldProps('duration')}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField fullWidth label="Price" {...addMovieForm.getFieldProps('price')} />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    multiline
+                    rows={4}
+                    fullWidth
+                    label="Description"
+                    inputProps={{ maxLength: 250 }}
+                    {...addMovieForm.getFieldProps('description')}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        color="primary"
+                        id="featured"
+                        checked={addMovieForm.values.featured}
+                        onChange={addMovieForm.handleChange}
+                      />
+                    }
+                    label="Featured"
+                  />
+                </Grid>
               </Grid>
             </Grid>
 
