@@ -2,15 +2,14 @@ import React, { useEffect } from 'react';
 import { Alert, Container } from '@mui/material';
 import MovieItem from './MovieItem';
 import useTypedSelector from '../../../hooks/useTypedSelector';
-import { useDispatch } from 'react-redux';
-import { fetchMovies } from '../../../store/actions/moviesAction';
 import { HashLoader } from 'react-spinners';
+import { useAction } from '../../../hooks/useAction';
 
 function MoviesList() {
   const { error, loading, movies } = useTypedSelector((state) => state.movies);
-  const dispatch = useDispatch();
+  const { fetchMovies } = useAction();
   useEffect(() => {
-    dispatch(fetchMovies());
+    fetchMovies();
   }, []);
 
   return (
