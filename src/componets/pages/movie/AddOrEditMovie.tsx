@@ -94,6 +94,7 @@ function AddOrEditMovie() {
           <form onSubmit={addMovieForm.handleSubmit}>
             <Grid container spacing={2}>
               <Grid
+                container
                 item
                 xs={4}
                 direction="column"
