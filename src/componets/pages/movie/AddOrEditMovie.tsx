@@ -14,19 +14,27 @@ import { useFormik } from 'formik';
 import { useUserAuth } from '../../../hooks/useUserAuth';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Movie } from '../../../types/types';
-import { addNewMovie, editMovie, getMovie } from './movies.service';
+import { useDispatch } from 'react-redux';
+import useTypedSelector from '../../../hooks/useTypedSelector';
+import {
+  createMovieAction,
+  fetchMovieAction,
+  updateMovieAction,
+} from '../../../store/actions/movieAction';
 
 function AddOrEditMovie() {
   const { user } = useUserAuth();
+  const dispatch = useDispatch();
+  const { movie } = useTypedSelector((state) => state.movie);
   const params = useParams();
   const navigate = useNavigate();
   const [image, setImage] = useState<any>(null);
+
   useEffect(() => {
     function detail() {
-      getMovie(params.id).then((res) => {
-        addMovieForm.setValues(res.data);
-        setImage(res.data.img);
-      });
+      dispatch(fetchMovieAction(params.id));
+      addMovieForm.setValues(movie);
+      setImage(movie.img);
     }
 
     if (params.id) detail();
@@ -58,9 +66,12 @@ function AddOrEditMovie() {
     },
     onSubmit: (values, { resetForm }) => {
       if (params.id) {
-        editMovie(params.id, values, user).then(() => navigate(`/movies/${params.id}`));
+        dispatch(updateMovieAction(params.id, values, user));
+        navigate(`/movies/${params.id}`);
       } else {
-        addNewMovie(user, values, resetForm).then(() => navigate(`/movies`));
+        dispatch(createMovieAction(user, values));
+        resetForm();
+        navigate(`/movies`);
       }
     },
   });

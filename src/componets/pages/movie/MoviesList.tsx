@@ -3,13 +3,14 @@ import { Alert, Container } from '@mui/material';
 import MovieItem from './MovieItem';
 import useTypedSelector from '../../../hooks/useTypedSelector';
 import { HashLoader } from 'react-spinners';
-import { useAction } from '../../../hooks/useAction';
+import { useDispatch } from 'react-redux';
+import { fetchMovies } from '../../../store/actions/moviesAction';
 
 function MoviesList() {
   const { error, loading, movies } = useTypedSelector((state) => state.movies);
-  const { fetchMovies } = useAction();
+  const dispatch = useDispatch();
   useEffect(() => {
-    fetchMovies();
+    dispatch(fetchMovies());
   }, []);
 
   return (
@@ -17,7 +18,6 @@ function MoviesList() {
       maxWidth="lg"
       sx={{ display: 'flex', flexWrap: 'wrap', mt: 2, justifyContent: 'center' }}
     >
-      {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
       {error && <Alert severity="error">{error}</Alert>}
       {loading ? (
         <HashLoader color="orange" loading={loading} size={50} />

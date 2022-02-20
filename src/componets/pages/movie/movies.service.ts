@@ -1,5 +1,4 @@
 import { Movie, User } from '../../../types/types';
-import { FormikState } from 'formik';
 import $api from '../../../interseptors/interseptor';
 
 export const getMovies = async () => {
@@ -12,15 +11,14 @@ export const getMovie = async (id: string | undefined) => {
 
 export const addNewMovie = async (
   user: User | null,
-  values: Movie,
-  resetForm: (nextState?: Partial<FormikState<Movie>> | undefined) => void
+  values: Movie
+  // resetForm: (nextState?: Partial<FormikState<Movie>> | undefined) => void
 ) => {
-  await $api.post<Movie>(`/movie/create`, {
+  return await $api.post<Movie>(`/movie/create`, {
     ...values,
     author: user?.email,
     rate: 0,
   });
-  resetForm();
 };
 
 export const editMovie = async (id: string | undefined, values: Movie, user: User | null) => {

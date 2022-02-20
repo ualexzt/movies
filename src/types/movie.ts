@@ -4,6 +4,7 @@ export interface MovieState {
   movie: Movie;
   loading: boolean;
   error: null | string;
+  rate: number;
 }
 
 export enum MovieActionType {
@@ -13,6 +14,7 @@ export enum MovieActionType {
   CREATE_MOVIE = 'CREATE_MOVIE',
   UPDATE_MOVIE = 'UPDATE_MOVIE',
   DELETE_MOVIE = 'DELETE_MOVIE',
+  UPDATE_RATE = 'UPDATE_RATE',
 }
 
 interface FetchMovieAction {
@@ -43,10 +45,16 @@ interface DeleteMovieAction {
   type: MovieActionType.DELETE_MOVIE;
 }
 
+interface UpdateRateAction {
+  type: MovieActionType.UPDATE_RATE;
+  payload: number;
+}
+
 export type MovieAction =
   | FetchMovieAction
   | FetchMoviesActionSuccess
   | FetchMovieActionError
   | CreateMovieAction
   | UpdateMovieAction
-  | DeleteMovieAction;
+  | DeleteMovieAction
+  | UpdateRateAction;
