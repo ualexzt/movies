@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { Login } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,10 +10,10 @@ function LoginButton() {
       <Button
         variant="contained"
         startIcon={<Login />}
-        sx={{ ml: 5, border: 1 }}
+        sx={{ ml: 5 }}
         onClick={() => navigate('/login')}
       >
-        JOIN US
+        <Typography sx={{ display: { xs: 'none', md: 'flex' } }}>JOIN US</Typography>
       </Button>
     </>
   );

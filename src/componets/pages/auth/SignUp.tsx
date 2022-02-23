@@ -14,12 +14,19 @@ function SignUp() {
 
   const formik = useFormik({
     initialValues: {
+      username: '',
       email: '',
       password: '',
     },
     onSubmit: async (values) => {
-      signUp(values.email, values.password).then((res) => setUser(res));
-      navigate('/profile');
+      try {
+        const response = await signUp(values.username, values.email, values.password);
+        localStorage.setItem('token', response.data.accessToken);
+        setUser(response.data.user);
+        navigate('/');
+      } catch (e: any) {
+        console.log(e.response?.data?.message);
+      }
     },
   });
   return (
@@ -51,6 +58,8 @@ function SignUp() {
           </Typography>
           <form onSubmit={formik.handleSubmit}>
             <AuthForm
+              type="signup"
+              username={formik.values.username}
               email={formik.values.email}
               password={formik.values.password}
               handleChange={formik.handleChange}

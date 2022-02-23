@@ -1,21 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { Container } from '@mui/material';
-import { Movie } from '../../../types';
+import React, { useEffect } from 'react';
+import { Alert, Container } from '@mui/material';
 import MovieItem from './MovieItem';
-import { getMovies } from './movies.service';
+import useTypedSelector from '../../../hooks/useTypedSelector';
+import { HashLoader } from 'react-spinners';
+import { useDispatch } from 'react-redux';
+import { fetchMovies } from '../../../store/actions/moviesAction';
 
 function MoviesList() {
-  const [movies, setMovies] = useState<Movie[]>([]);
-
+  const { error, loading, movies } = useTypedSelector((state) => state.movies);
+  const dispatch = useDispatch();
   useEffect(() => {
-    getMovies().then((res) => setMovies(res.data));
+    dispatch(fetchMovies());
   }, []);
 
   return (
-    <Container maxWidth="lg" sx={{ display: 'flex', flexWrap: 'wrap', mt: 2 }}>
-      {movies.length < 0
-        ? 'Don`t create movies list'
-        : movies.map((movie) => <MovieItem key={movie.id} movie={movie} />)}
+    <Container
+      maxWidth="lg"
+      sx={{ display: 'flex', flexWrap: 'wrap', mt: 2, justifyContent: 'center' }}
+    >
+      {error && <Alert severity="error">{error}</Alert>}
+      {loading ? (
+        <HashLoader color="orange" loading={loading} size={50} />
+      ) : (
+        movies.map((movie) => <MovieItem key={movie._id} movie={movie} />)
+      )}
     </Container>
   );
 }
